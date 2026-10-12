@@ -1,0 +1,132 @@
+:root {
+  --bg: #141838;
+  --bg-2: #1d2250;
+  --line: #333a7a;
+  --text: #ecebff;
+  --muted: #a3a6d6;
+  --accent: #ff5c7a;
+  --accent-ink: #2a0610;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Onest", system-ui, sans-serif;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+#mPlayer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#mPlayer iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+h1, h2, h3, .logo { font-family: "Unbounded", "Onest", sans-serif; font-weight: 700; line-height: 1.15; }
+
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- Шапка ---------- */
+.top { position: sticky; top: 0; z-index: 10; background: rgba(20, 24, 56, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top__inner { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.logo { color: var(--text); text-decoration: none; font-size: 1.1rem; }
+
+.tabs { display: flex; gap: 6px; }
+.tab { background: none; border: 1px solid transparent; padding: 8px 14px; border-radius: 999px; cursor: pointer; color: var(--muted); }
+.tab:hover { color: var(--text); }
+.tab.is-active { background: var(--bg-2); border-color: var(--line); color: var(--text); }
+.badge { display: inline-block; min-width: 22px; padding: 0 6px; margin-left: 4px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: .8rem; font-weight: 700; text-align: center; }
+
+main { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* ---------- Главный блок ---------- */
+.hero {
+  margin-top: 24px;
+  border-radius: 22px;
+  min-height: 340px;
+  padding: clamp(24px, 5vw, 56px);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 14px;
+  position: relative; overflow: hidden;
+  background: var(--bg-2) center / cover no-repeat;
+  border: 1px solid var(--line);
+}
+.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,24,56,.95) 15%, rgba(20,24,56,.35)); }
+.hero > * { position: relative; max-width: 620px; }
+.hero h1 { font-size: clamp(1.8rem, 5vw, 3.2rem); }
+.hero p { color: var(--muted); }
+.countdown { font-family: "Unbounded", sans-serif; font-size: 1.1rem; color: var(--accent); }
+
+/* ---------- Кнопки ---------- */
+.btn { display: inline-block; background: var(--accent); color: var(--accent-ink); border: 0; padding: 11px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; text-decoration: none; }
+.btn:hover { filter: brightness(1.08); }
+.btn--ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn--ghost:hover { border-color: var(--text); }
+.hero__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- Фильтры ---------- */
+.controls { display: grid; grid-template-columns: 1fr 200px 220px; gap: 12px; margin: 28px 0 12px; }
+.controls input, .controls select { background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; width: 100%; }
+.controls select option { background: var(--bg-2); }
+.status { color: var(--muted); margin-bottom: 16px; min-height: 1.5em; }
+
+/* ---------- Сетка карточек ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 22px; }
+
+.card { background: none; border: 0; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 10px; padding: 0; }
+.card__poster {
+  aspect-ratio: 2 / 3; border-radius: var(--radius);
+  background: var(--bg-2) center / cover no-repeat;
+  position: relative; overflow: hidden;
+  border: 1px solid var(--line);
+  display: flex; align-items: flex-end; padding: 14px;
+  transition: transform .2s;
+}
+.card:hover .card__poster { transform: translateY(-4px); }
+.card__poster span { font-family: "Unbounded", sans-serif; font-size: 1rem; text-shadow: 0 2px 8px rgba(0,0,0,.5); }
+.card__date { position: absolute; top: 10px; left: 10px; background: var(--bg); padding: 4px 10px; border-radius: 999px; font-size: .82rem; }
+.card__title { font-weight: 700; }
+.card__genres { color: var(--muted); font-size: .9rem; }
+
+/* ---------- Модальное окно ---------- */
+.modal { position: fixed; inset: 0; z-index: 50; background: rgba(8, 10, 28, .85); display: flex; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; }
+.modal[hidden] { display: none; }
+.modal__box { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; width: min(860px, 100%); max-height: 94vh; overflow-y: auto; position: relative; animation: pop .22s ease-out; }
+@keyframes pop { from { opacity: 0; transform: scale(.97); } }
+.modal__close { position: absolute; top: 10px; right: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: 0; background: rgba(20,24,56,.85); font-size: 1.5rem; cursor: pointer; }
+.player { aspect-ratio: 16 / 9; background: var(--bg-2) center / cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: var(--muted); }
+.player iframe { width: 100%; height: 100%; border: 0; }
+.modal__body { padding: 24px; display: grid; gap: 14px; }
+.modal__meta { color: var(--muted); }
+.facts { display: grid; grid-template-columns: 130px 1fr; gap: 6px 14px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; }
+.modal__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.foot { border-top: 1px solid var(--line); padding: 24px 20px; text-align: center; color: var(--muted); font-size: .9rem; }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 700px) {
+  .controls { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr; }
+  .facts dt { margin-top: 6px; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
